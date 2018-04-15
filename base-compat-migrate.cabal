@@ -11,7 +11,7 @@ homepage: https://github.com/bergmark/base-compat-migrate#readme
 bug-reports: https://github.com/bergmark/base-compat-migrate/issues
 synopsis: Helps migrating projects to base-compat(-batteries).
 description:
-    Please see the README on Github at <https://github.com/bergmark/base-compat-migrate#readme>
+    Please see the included README or visit <https://github.com/bergmark/base-compat-migrate#readme>.
 category: Development
 build-type: Simple
 extra-source-files:
