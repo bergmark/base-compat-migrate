@@ -43,6 +43,13 @@ This library offers a different work flow:
 Whenever you wish to support newer versions of `base` or `base-compat`
 you can repeat these steps.
 
+### Common Issues with Solutions
+
+* If your package declares Paths modules it won't compile without
+  access to base. You can drop the Paths module until the affected
+  component builds, and then add it again along with the base
+  dependency.
+
 ## Dependencies
 
 Since `base-compat-migrate` re-exports modules, we depend on minor
