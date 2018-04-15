@@ -41,6 +41,7 @@ before_install:
   - "PATH=/opt/ghc/bin:/opt/ghc-ppa-tools/bin:$HOME/local/bin:$PATH"
   - HCNUMVER=$(( $(${HC} --numeric-version|sed -E 's/([0-9]+)\.([0-9]+)\.([0-9]+).*/\1 * 10000 + \2 * 100 + \3/') ))
   - echo $HCNUMVER
+  - FLAGS="-fexe"
 
 install:
   - cabal --version
@@ -60,8 +61,8 @@ install:
       (cd "." && autoreconf -i);
     fi
   - rm -f cabal.project.freeze
-  - cabal new-build -w ${HC} ${TEST} ${BENCH} --project-file="cabal.project" --dep -j2 all
-  - cabal new-build -w ${HC} --disable-tests --disable-benchmarks --project-file="cabal.project" --dep -j2 all
+  - cabal new-build -w ${HC} ${TEST} ${BENCH} --project-file="cabal.project" --dep -j2 all ${FLAGS}
+  - cabal new-build -w ${HC} --disable-tests --disable-benchmarks --project-file="cabal.project" --dep -j2 all ${FLAGS}
   - rm -rf .ghc.environment.* "."/dist
   - DISTDIR=$(mktemp -d /tmp/dist-test.XXXX)
 
@@ -76,13 +77,13 @@ script:
   - "printf 'packages: base-compat-migrate-*/*.cabal\\n' > cabal.project"
   - cat cabal.project
   # this builds all libraries and executables (without tests/benchmarks)
-  - cabal new-build -w ${HC} --disable-tests --disable-benchmarks all
+  - cabal new-build -w ${HC} --disable-tests --disable-benchmarks all ${FLAGS}
 
   # Build with installed constraints for packages in global-db
-  - if $INSTALLED; then echo cabal new-build -w ${HC} --disable-tests --disable-benchmarks $(${HCPKG} list --global --simple-output --names-only | sed 's/\([a-zA-Z0-9-]\{1,\}\) */--constraint="\1 installed" /g') all | sh; else echo "Not building with installed constraints"; fi
+  - if $INSTALLED; then echo cabal new-build -w ${HC} --disable-tests --disable-benchmarks $(${HCPKG} list --global --simple-output --names-only ${FLAGS} | sed 's/\([a-zA-Z0-9-]\{1,\}\) */--constraint="\1 installed" /g') all | sh; else echo "Not building with installed constraints"; fi
 
   # build & run tests, build benchmarks
-  - cabal new-build -w ${HC} ${TEST} ${BENCH} all
+  - cabal new-build -w ${HC} ${TEST} ${BENCH} all ${FLAGS}
 
   # cabal check
   - (cd base-compat-migrate-* && cabal check)
