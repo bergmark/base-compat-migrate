@@ -1,2 +1,8 @@
 resolver: nightly-2018-04-14
 packages: [.]
+flags:
+  base-compat-migrate:
+    exe: true
+extra-deps:
+  - aeson-1.3.1.0
+  - base-compat-0.10.1

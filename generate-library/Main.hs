@@ -6,19 +6,20 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main (main) where
 
-import Data.String
-import Data.String.Conversions
-import Distribution.ModuleName hiding (main)
-import Distribution.PackageDescription.Parsec
-import Distribution.PackageDescription.PrettyPrint
-import Distribution.Types.CondTree
-import Distribution.Types.GenericPackageDescription
-import Distribution.Types.Library
-import Distribution.Types.ModuleReexport
-import Distribution.Types.PackageName
+import Control.Monad (unless)
+import Data.String (fromString)
+import Data.String.Conversions (cs)
+import Distribution.ModuleName (ModuleName, components, fromComponents)
+import Distribution.PackageDescription.Parsec (parseGenericPackageDescription, readGenericPackageDescription, runParseResult)
+import Distribution.PackageDescription.PrettyPrint (writeGenericPackageDescription)
+import Distribution.Types.CondTree (condTreeData)
+import Distribution.Types.GenericPackageDescription (GenericPackageDescription, condLibrary)
+import Distribution.Types.Library (exposedModules, reexportedModules)
+import Distribution.Types.ModuleReexport (ModuleReexport (..))
+import Distribution.Types.PackageName (PackageName)
 import Distribution.Verbosity (silent)
-import Network.HTTP.Simple
-import System.Directory
+import Network.HTTP.Simple (getResponseBody, getResponseHeader, getResponseStatusCode, httpLBS)
+import System.Directory (createDirectoryIfMissing, doesFileExist)
 import qualified Data.ByteString.Lazy.Char8 as L8
 
 getExposedModules :: GenericPackageDescription -> [ModuleName]
@@ -68,7 +69,7 @@ cabalFileUrl name version
   ++ "/" ++ name ++ ".cabal"
 
 migratePath :: FilePath
-migratePath = "../base-compat-migrate.cabal"
+migratePath = "base-compat-migrate.cabal"
 
 baseVersion :: String
 baseVersion = "4.11.0.0"
@@ -78,12 +79,16 @@ baseCompatVersion = "0.10.1"
 
 main :: IO ()
 main = do
+  ex <- doesFileExist migratePath
+  unless ex $
+    error $ "Couldn't find " ++ migratePath ++ ", are you in the repository root?"
+  createDirectoryIfMissing False "tmp"
   allBaseModules                <- downloadFile
     (cabalFileUrl "base" baseVersion)
-    ("base-" ++ baseVersion ++ ".cabal")
+    ("tmp/base-" ++ baseVersion ++ ".cabal")
   allBaseCompatModules          <- downloadFile
     (cabalFileUrl "base-compat" baseCompatVersion)
-    ("base-compat-" ++ baseCompatVersion ++ ".cabal")
+    ("tmp/base-compat-" ++ baseCompatVersion ++ ".cabal")
   let compatModules              = filter ((== "Compat") . last . components) allBaseCompatModules
   let compatModulesWithoutCompat = fromComponents . init . components <$> compatModules
   let baseModules                = filter (`notElem` compatModulesWithoutCompat) allBaseModules
