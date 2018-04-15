@@ -15,7 +15,7 @@ description:
 category: Development
 build-type: Simple
 extra-source-files:
-    ChangeLog.md
+    CHANGELOG.md
     README.md
 
 source-repository head
