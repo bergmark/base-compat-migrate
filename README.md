@@ -1,4 +1,4 @@
-# base-compat-migrate
+# base-compat-migrate [![Hackage](https://img.shields.io/hackage/v/base-compat-migrate.svg)](https://hackage.haskell.org/package/base-compat-migrate) [![Build Status](https://travis-ci.org/bergmark/base-compat-migrate.svg)](https://travis-ci.org/bergmark/base-compat-migrate)
 
 This library is meant as a temporary migration library when moving a
 library to
