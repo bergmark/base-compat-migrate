@@ -1,12 +1,12 @@
 cabal-version: 1.21
 name: base-compat-migrate
-version: 0.1.0.0
+version: 0.1.0.1
 license: BSD3
 license-file: LICENSE
 copyright: (c) 2018 Adam Bergmark
 maintainer: adam@bergmark.nl
 author: Adam Bergmark
-tested-with: ghc ==8.4.1
+tested-with: ghc ==8.4.3
 homepage: https://github.com/bergmark/base-compat-migrate#readme
 bug-reports: https://github.com/bergmark/base-compat-migrate/issues
 synopsis: Helps migrating projects to base-compat(-batteries).
@@ -237,7 +237,7 @@ library
         Paths_base_compat_migrate
     default-language: Haskell2010
     build-depends:
-        base ==4.11.0.*,
+        base ==4.11.1.*,
         base-compat ==0.10.1.*
 
 executable base-compat-migrate-generate
