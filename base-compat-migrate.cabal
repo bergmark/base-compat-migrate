@@ -34,7 +34,6 @@ library
                         base:Control.Concurrent.Chan,
                         base:Control.Concurrent.QSem,
                         base:Control.Concurrent.QSemN,
-                        base:Control.Exception,
                         base:Control.Exception.Base,
                         base:Control.Monad.Fix,
                         base:Control.Monad.Instances,
@@ -181,6 +180,7 @@ library
                         base:Unsafe.Coerce,
                         base-compat:Control.Concurrent.Compat,
                         base-compat:Control.Concurrent.MVar.Compat,
+                        base-compat:Control.Exception.Compat,
                         base-compat:Control.Monad.Compat,
                         base-compat:Control.Monad.Fail.Compat,
                         base-compat:Control.Monad.IO.Class.Compat,
@@ -198,6 +198,7 @@ library
                         base-compat:Data.Functor.Compat,
                         base-compat:Data.Functor.Compose.Compat,
                         base-compat:Data.Functor.Const.Compat,
+                        base-compat:Data.Functor.Contravariant.Compat,
                         base-compat:Data.Functor.Identity.Compat,
                         base-compat:Data.Functor.Product.Compat,
                         base-compat:Data.Functor.Sum.Compat,
@@ -238,7 +239,7 @@ library
     default-language: Haskell2010
     build-depends:
         base ==4.11.1.*,
-        base-compat ==0.10.1.*
+        base-compat ==0.10.4.*
 
 executable base-compat-migrate-generate
     main-is: Generate.hs
