@@ -75,7 +75,7 @@ baseVersion :: String
 baseVersion = "4.11.0.0"
 
 baseCompatVersion :: String
-baseCompatVersion = "0.10.1"
+baseCompatVersion = "0.10.4"
 
 main :: IO ()
 main = do
@@ -89,7 +89,7 @@ main = do
   allBaseCompatModules          <- downloadFile
     (cabalFileUrl "base-compat" baseCompatVersion)
     ("tmp/base-compat-" ++ baseCompatVersion ++ ".cabal")
-  let compatModules              = filter ((== "Compat") . last . components) allBaseCompatModules
+  let compatModules              = filter ((/= "Repl") . last . components) $ allBaseCompatModules
   let compatModulesWithoutCompat = fromComponents . init . components <$> compatModules
   let baseModules                = filter (`notElem` compatModulesWithoutCompat) allBaseModules
   pd <- readGenericPackageDescription silent migratePath
