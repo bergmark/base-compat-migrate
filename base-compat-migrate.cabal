@@ -1,6 +1,6 @@
 cabal-version: 1.21
 name: base-compat-migrate
-version: 0.1.0.1
+version: 0.1.1.0
 license: BSD3
 license-file: LICENSE
 copyright: (c) 2018 Adam Bergmark
