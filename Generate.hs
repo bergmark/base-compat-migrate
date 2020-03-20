@@ -72,10 +72,10 @@ migratePath :: FilePath
 migratePath = "base-compat-migrate.cabal"
 
 baseVersion :: String
-baseVersion = "4.11.0.0"
+baseVersion = "4.12.0.0"
 
 baseCompatVersion :: String
-baseCompatVersion = "0.10.4"
+baseCompatVersion = "0.11.1"
 
 main :: IO ()
 main = do
