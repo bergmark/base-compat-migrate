@@ -6,7 +6,7 @@ license-file:       LICENSE
 copyright:          (c) 2018 Adam Bergmark
 maintainer:         adam@bergmark.nl
 author:             Adam Bergmark
-tested-with:        ghc ==8.4.3
+tested-with:        ghc ==8.8.3
 homepage:           https://github.com/bergmark/base-compat-migrate#readme
 bug-reports:        https://github.com/bergmark/base-compat-migrate/issues
 synopsis:           Helps migrating projects to base-compat(-batteries).
